@@ -46,6 +46,9 @@ dependencies {
     // https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api
     implementation 'jakarta.el:jakarta.el-api:6.0.1'
 
+    // VALIDATION
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 }
 
 tasks.named('test') {
