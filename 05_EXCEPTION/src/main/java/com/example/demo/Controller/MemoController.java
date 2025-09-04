@@ -19,8 +19,15 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/memo")
 public class MemoController {
 
+//    @ExceptionHandler(Exception.class)
+//    public String exception_handler(Exception e){
+//        log.error("MemoController's Exception..."+e);
+//        return "memo/error";
+//    }
+
     @InitBinder
-    public void dataBinder(WebDataBinder webDataBinder){
+    public void dataBinder(WebDataBinder webDataBinder)throws Exception
+    {
         log.info("MemoController's dataBinder...."+webDataBinder);
         webDataBinder.registerCustomEditor(LocalDate.class,"data_test", new DataTestEditor() );
     }
@@ -31,6 +38,7 @@ public class MemoController {
             log.info("DataTestEditor's setAsText text : " + text);
             LocalDate date =null;
             if(text.isEmpty()){
+
                 date = LocalDate.now();
             }else{
                 //format 확인(yyyy#MM#dd)
@@ -43,11 +51,13 @@ public class MemoController {
 
 
     @GetMapping("/add")
-    public void add_memo_get(){
+    public void add_memo_get() throws Exception
+    {
         log.info("GET /memo/add...");
     }
     @PostMapping("/add")
-    public void add_memo_post(@Valid MemoDto dto, BindingResult bindingResult, Model model){
+    public void add_memo_post(@Valid MemoDto dto, BindingResult bindingResult, Model model)throws Exception
+    {
         log.info("POST /memo/add..." + dto);
         //파라미터
         //입력값검증(데이터)
@@ -57,7 +67,10 @@ public class MemoController {
                 log.info("Error Field : "+error.getField()+" Error Message : "+error.getDefaultMessage());
                 model.addAttribute(error.getField(),error.getDefaultMessage());
             }
+
+            throw new Exception("유효성 검증 오류!!");
         }
+
         //서비스 요청 -> Domain.Common.Service
         //뷰로 이동
     }
