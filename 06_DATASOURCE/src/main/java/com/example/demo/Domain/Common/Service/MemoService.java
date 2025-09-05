@@ -1,0 +1,19 @@
+package com.example.demo.Domain.Common.Service;
+
+import com.example.demo.Domain.Common.Dao.MemoDao;
+import com.example.demo.Domain.Common.Dto.MemoDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MemoService {
+
+    @Autowired
+    private MemoDao memodao;
+
+    public boolean memoRegistration (MemoDto dto)throws Exception{
+        int result = memodao.insert(dto);
+
+        return result>0;
+    }
+}

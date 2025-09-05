@@ -5,10 +5,12 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>INDEX PAGE</h1>
+<h1>/memo ERROR PAGE</h1>
 
-<div>
-    ${message}
-</div>
+EX : ${ex}
+<ht/>
+
+EXCEPTION : <%=excepri =
+
 </body>
 </html>

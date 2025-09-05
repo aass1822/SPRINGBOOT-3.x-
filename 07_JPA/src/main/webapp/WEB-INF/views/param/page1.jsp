@@ -5,10 +5,13 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>INDEX PAGE</h1>
 
-<div>
-    ${message}
-</div>
+<h1>/param/page1</h1>
+
+DTO : ${dto}<br/>
+이름 : ${dto.name}<br/>
+나이: ${dto.age}<br/>
+주소 : ${dto.addr}<br/>
+isLogin : ${isLogin}<br/>
 </body>
 </html>

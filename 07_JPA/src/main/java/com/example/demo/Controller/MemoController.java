@@ -9,13 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.beans.PropertyEditorSupport;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @Slf4j
@@ -30,29 +27,29 @@ public class MemoController {
 //        return "memo/error";
 //    }
 
-    @InitBinder
-    public void dataBinder(WebDataBinder webDataBinder)throws Exception
-    {
-        log.info("MemoController's dataBinder...."+webDataBinder);
-        webDataBinder.registerCustomEditor(LocalDate.class,"data_test", new DataTestEditor() );
-    }
-
-    private static class DataTestEditor extends PropertyEditorSupport {
-        @Override
-        public void setAsText(String text) throws IllegalArgumentException {
-            log.info("DataTestEditor's setAsText text : " + text);
-            LocalDate date =null;
-            if(text.isEmpty()){
-
-                date = LocalDate.now();
-            }else{
-                //format 확인(yyyy#MM#dd)
-                text = text.replaceAll("#","-");
-                date = LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            }
-            setValue(date);
-        }
-    }
+//    @InitBinder
+//    public void dataBinder(WebDataBinder webDataBinder)throws Exception
+//    {
+//        log.info("MemoController's dataBinder...."+webDataBinder);
+//        webDataBinder.registerCustomEditor(LocalDate.class,"data_test", new DataTestEditor() );
+//    }
+//
+//    private static class DataTestEditor extends PropertyEditorSupport {
+//        @Override
+//        public void setAsText(String text) throws IllegalArgumentException {
+//            log.info("DataTestEditor's setAsText text : " + text);
+//            LocalDate date =null;
+//            if(text.isEmpty()){
+//
+//                date = LocalDate.now();
+//            }else{
+//                //format 확인(yyyy#MM#dd)
+//                text = text.replaceAll("#","-");
+//                date = LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//            }
+//            setValue(date);
+//        }
+//    }
 
 
     @GetMapping("/add")
@@ -78,12 +75,13 @@ public class MemoController {
         }
 
         //서비스 요청 -> Domain.Common.Service
-        boolean isAdded = memoService.memoRegistration(dto);
-        if(isAdded){
-            redirectAttributes.addFlashAttribute("message","메모등록완료!");
+//        boolean isAdded = memoService.memoRegistration(dto);
+        Long insertedId = memoService.MemoRegistration2(dto);
+        if(insertedId!=null){
+            redirectAttributes.addFlashAttribute("message","메모등록완료!"+insertedId);
         }
         //뷰로 이동
-        return (isAdded) ? "redirect:/":"memo/add";
+        return (insertedId!=null) ? "redirect:/":"memo/add";
     }
 
 }

@@ -5,10 +5,12 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>INDEX PAGE</h1>
+<h1>
+	/param/redirect/step1
+</h1>
 
-<div>
-    ${message}
-</div>
+INIT : ${init}<br/>
+R_INIT2 : ${r_init2}<br/>
+STEP1 : ${step1}<br/>
 </body>
 </html>

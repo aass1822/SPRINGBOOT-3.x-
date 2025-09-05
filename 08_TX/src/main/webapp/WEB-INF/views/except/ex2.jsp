@@ -5,10 +5,9 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>INDEX PAGE</h1>
+<h1>/except/ex2 PAGE</h1>
 
-<div>
-    ${message}
-</div>
+RESULT : ${result}
+
 </body>
 </html>
