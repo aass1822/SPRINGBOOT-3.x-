@@ -52,7 +52,6 @@ dependencies {
     // JDBC
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     // MYSQL
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.mysql:mysql-connector-j'
     //DBCP
     // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
