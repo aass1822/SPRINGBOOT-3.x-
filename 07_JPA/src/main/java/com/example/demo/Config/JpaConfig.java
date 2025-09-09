@@ -1,17 +1,11 @@
 package com.example.demo.Config;//package com.example.demo.Config;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
@@ -54,25 +48,25 @@ public class JpaConfig {
 
 
     //애플리케이션 시작 시 데이터베이스 초기화
-    @Bean
-    public DataSourceInitializer dataSourceInitializer() {
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator());
-        return initializer;
-    }
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer() {
+//        DataSourceInitializer initializer = new DataSourceInitializer();
+//        initializer.setDataSource(dataSource);
+//        initializer.setDatabasePopulator(databasePopulator());
+//        return initializer;
+//    }
 
     //schema.sql과 data.sql 스크립트를 실행
-    private DatabasePopulator databasePopulator() {
-        //Spring Framework에서 제공하는 클래스로, 외부 리소스에 정의된 SQL 스크립트를 사용하여 데이터베이스를 초기화하거나 정리하는 데 사용
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        //src/main/resources 디렉토리에 위치한 SQL 스크립트를 로드
-        Resource schemaScript = new ClassPathResource("schema.sql");
-        Resource dataScript = new ClassPathResource("data.sql");
-        populator.addScript(schemaScript);
-        populator.addScript(dataScript);
-        return populator;
-    }
+//    private DatabasePopulator databasePopulator() {
+//        //Spring Framework에서 제공하는 클래스로, 외부 리소스에 정의된 SQL 스크립트를 사용하여 데이터베이스를 초기화하거나 정리하는 데 사용
+//        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//        //src/main/resources 디렉토리에 위치한 SQL 스크립트를 로드
+//        Resource schemaScript = new ClassPathResource("schema.sql");
+//        Resource dataScript = new ClassPathResource("data.sql");
+//        populator.addScript(schemaScript);
+//        populator.addScript(dataScript);
+//        return populator;
+//    }
 
 }
 

@@ -20,8 +20,7 @@ public class TxTestService {
     @Autowired
     private MemoRepository memoRepository;
 
-    public void addMemo()throws Exception
-    {
+    public void addMemo() throws Exception {
         log.info("TxTestService's addMemo...");
         Memo memo = Memo.builder()
                 .id(null)
@@ -38,9 +37,9 @@ public class TxTestService {
         throw new SQLException();
 //        memoRepository.save(memo);
     }
-    @Transactional(rollbackFor = SQLException.class,transactionManager = "jpaTransactionManager")
-    public void addMemoTx() throws Exception
-    {
+
+    @Transactional(rollbackFor = SQLException.class, transactionManager = "jpaTransactionManager")
+    public void addMemoTx() throws Exception {
 
         log.info("TxTestService's addMemoTx...");
         Memo memo = Memo.builder()
