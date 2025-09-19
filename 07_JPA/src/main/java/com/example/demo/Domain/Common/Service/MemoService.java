@@ -7,32 +7,34 @@ import com.example.demo.Domain.Common.Repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
 public class MemoService {
-
     @Autowired
-    private MemoDao memodao;
+    private MemoDao memoDao;
 
     @Autowired
     private MemoRepository memoRepository;
 
-    public boolean memoRegistration (MemoDto dto)throws Exception{
-        int result = memodao.insert(dto);
 
+    public boolean memoRegistration(MemoDto dto) throws Exception {
+        int result = memoDao.insert(dto);
         return result>0;
     }
 
-    public Long MemoRegistration2(MemoDto dto) throws Exception{
-        // dto -> entity
+    public Long memoRegistration2(MemoDto dto) throws Exception {
+        //dto -> entity
         Memo memo = Memo.builder()
-                .id(null)
-                .text(dto.getText())
-                .writer(dto.getWriter())
-                .createAt(LocalDateTime.now())
-                .build();
+                    .id(null)
+                    .text(dto.getText())
+                    .writer(dto.getWriter())
+                    .createAt(LocalDateTime.now())
+                    .build();
         memoRepository.save(memo);
         return memo.getId();
     }
+
+
 }

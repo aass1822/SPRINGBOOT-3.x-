@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<User,String> {
     @Query("SELECT u FROM User as u where u.role=?1")
     List<User> selectAllByRole(String role);
 
@@ -18,7 +18,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT u FROM User as u where u.role=:role")
     List<User> selectAllByRole_2(@Param("role") String r);
-                                                            // JPQL사용하는 변수
+
     @Query("SELECT u FROM User as u where u.username like concat('%',:user,'%')")
     List<User> selectAllLikeUsername(@Param("user") String username);
+
 }

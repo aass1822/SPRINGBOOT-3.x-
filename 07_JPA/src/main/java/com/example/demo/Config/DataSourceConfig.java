@@ -1,10 +1,13 @@
 package com.example.demo.Config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+import javax.sql.DataSource;
+
+@Configuration // 설정 클래스임을 나타내는 애노테이션 Bean의 정의를 담고있음
 public class DataSourceConfig {
 
 //    @Bean
@@ -15,22 +18,22 @@ public class DataSourceConfig {
 //        dataSource.setUsername("root");
 //        dataSource.setPassword("1234");
 //
-//        dataSource.setInitialSize(5); // 초기 연결개수
-//        dataSource.setMaxTotal(10); // 최대 연결 개수
-//        dataSource.setMaxIdle(8); // 최대 유휴 연결 수
-//        dataSource.setMinIdle(3); // 최소 유휴 연결 수
+//        dataSource.setInitialSize(5);//초기 연결개수
+//        dataSource.setMaxTotal(10);//최대 연결 개수
+//        dataSource.setMaxIdle(8);//최대 유휴 연결 수
+//        dataSource.setMinIdle(3);//최소 유휴 연결 수
 //
 //        return dataSource;
 //    }
-
+    
     @Bean
     public HikariDataSource dataSource(){
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/testdb");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1234");
-
-        return dataSource;
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver"); // 드라이버 경로
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/testdb"); // DB연결 경로
+        dataSource.setUsername("root"); // ID
+        dataSource.setPassword("1234"); // PW
+        return dataSource; // dataSource로 반환
     }
+
 }

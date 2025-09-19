@@ -7,15 +7,19 @@
 //
 //import java.time.LocalDateTime;
 //
+//import static org.junit.jupiter.api.Assertions.*;
+//
+//
 //@SpringBootTest
 //class MemoServiceTest {
 //
 //    @Autowired
-//    private  MemoService memoService;
+//    private MemoService memoService;
 //
 //    @Test
 //    public void t1() throws Exception{
-//        MemoDto dto = new MemoDto(10L,"","ad@a.com", LocalDateTime.now(),null);
+//        MemoDto dto = new MemoDto(11L,"","a@a.com", LocalDateTime.now(),null);
 //        memoService.memoRegistration(dto);
 //    }
+//
 //}

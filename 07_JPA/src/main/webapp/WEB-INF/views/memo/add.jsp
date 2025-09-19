@@ -9,19 +9,18 @@
 
     <form action="/memo/add" method="post">
 
-        <div>
-            <label>TEXT :</label> <span>${text}</span> <br/>
-            <textarea name="text"></textarea>
-        </div>
-        <div>
-            <label>WRITER :</label> <span>${writer}</span> <br/>
-             <input name="writer" />
-        </div>
+      <div>
+            <label>TEXT :</label> <span> ${text} </span> <br/>
+            <textarea name="text"> </textarea>
+      </div>
+      <div>
+            <label>WRITER :</label> <span> ${writer} </span> <br/>
+            <input name="writer" />
+      </div>
 
-       <div>
+      <div>
             <button>메모추가</button>
-       </div>
-
+      </div>
     </form>
 
 </body>

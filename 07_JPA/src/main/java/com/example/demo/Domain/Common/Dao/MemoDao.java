@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 @Repository
 public class MemoDao {
@@ -15,14 +16,12 @@ public class MemoDao {
     @Autowired
     private DataSource dataSource3;
 
-    public int insert(MemoDto dto)throws SQLException {
-
+    public int insert(MemoDto dto) throws SQLException {
         Connection conn = dataSource3.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement("insert into tbl_memo Values(null,?,?,now())");
+        PreparedStatement pstmt = conn.prepareStatement("insert into tbl_memo values(null,?,?,now())");
         pstmt.setString(1,dto.getText());
         pstmt.setString(2,dto.getWriter());
         int result = pstmt.executeUpdate();
-
         return result;
     }
 }

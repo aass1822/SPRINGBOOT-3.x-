@@ -30,35 +30,30 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-//	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // JSP EMBED TOMCAT
+    //JSP EMBED TOMCAT
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.10'
 
-    // JSTL
+
+    //JSP EL PARSER
+    implementation 'jakarta.el:jakarta.el-api:6.0.1'
+
     implementation 'jakarta.servlet:jakarta.servlet-api' //스프링부트 3.0 이상
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' //스프링부트 3.0 이상
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl' //스프링부트 3.0 이상
 
-    // JSP EL PARSER
-    // https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api
-    implementation 'jakarta.el:jakarta.el-api:6.0.1'
-
-    // VALIDATION
+    //VALIDATION
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // JDBC
+    //DATABASE
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    // MYSQL
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    //DBCP
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
     implementation 'org.apache.commons:commons-dbcp2:2.13.0'
 
-    // JPA
+    //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 }

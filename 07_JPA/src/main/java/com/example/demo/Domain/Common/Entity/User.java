@@ -17,11 +17,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class User {
     @Id
-    @Column(length = 100)
+    @Column(length=100)
     private String username;
     @Column(length = 255,nullable = false)
     private String password;
     @Column(length = 255)
     private String role;
-
 }
