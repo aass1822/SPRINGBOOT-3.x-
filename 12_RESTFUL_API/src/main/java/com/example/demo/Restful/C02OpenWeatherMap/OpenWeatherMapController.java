@@ -1,4 +1,4 @@
-package com.example.demo.Restful.OpenWeatherMap;
+package com.example.demo.Restful.C02OpenWeatherMap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;

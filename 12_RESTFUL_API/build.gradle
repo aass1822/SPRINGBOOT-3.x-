@@ -37,6 +37,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.19.0'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0'
 
+    // SIMPLE JSON
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+
 	//JAXB
 	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.5'

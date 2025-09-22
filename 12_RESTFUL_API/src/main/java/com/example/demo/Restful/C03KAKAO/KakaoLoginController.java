@@ -3,6 +3,8 @@ package com.example.demo.Restful.C03KAKAO;
 import com.example.demo.Restful.C01Opendata.OepnData01Controller;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,24 +13,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @Slf4j
 @RequestMapping("/kakao")
 public class KakaoLoginController {
     private String CLIENT_ID="";
-    private String REDIRECT_URI="http://localhost:8099/kakao/getCode";
-    private String LOGOUT_REDIRECT_URI="http://localhost:8099/kakao";
+//    private String REDIRECT_URI="http://localhost:8099/kakao/getCode";
+//    private String LOGOUT_REDIRECT_URI="http://localhost:8099/kakao";
+    private String REDIRECT_URI="http://192.168.5.12:8099/kakao/getCode";
+    private String LOGOUT_REDIRECT_URI="http://192.168.5.12:8099/kakao";
 
     private String code;
     private KakaoTokenResponse kakaoTokenResponse;
+    private KakaoFriendsResponse kakaoFriendsResponse;
 
     @GetMapping("/login")
     public String login() {
@@ -159,6 +163,106 @@ public class KakaoLoginController {
 
         return "redirect:https://kauth.kakao.com/oauth/logout?client_id="+CLIENT_ID+"&logout_redirect_uri="+LOGOUT_REDIRECT_URI;
     }
+
+    @GetMapping("/getMsgCode")
+    public String getMsgCode(){
+        log.info("GET /kakao/getMsgCode...");
+        return "redirect:https://kauth.kakao.com/oauth/authorize?client_id="+CLIENT_ID+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope=talk_message,friends";
+    }
+    @GetMapping("message/me/{message}")
+    @ResponseBody
+    public void message_me(@PathVariable String message){
+        String url = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 요청 헤더 설정
+        HttpHeaders header = new HttpHeaders();
+        header.add("Authorization","Bearer "+ kakaoTokenResponse.getAccess_token());
+        header.add("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+        // 요청 바디  파라미터 설정(o)
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+
+        JSONObject template_object = new JSONObject();       // {}
+        template_object.put("object_type","text");
+        template_object.put("text",message);
+        template_object.put("link",new JSONObject());
+        template_object.put("button_title","-");
+
+        params.add("template_object",template_object.toString());
+
+        HttpEntity< MultiValueMap<String,String> > entity = new HttpEntity(params,header);
+
+        // 요청 후 응답 확인
+        ResponseEntity<String> response =
+                restTemplate.exchange(url, HttpMethod.POST,entity, String.class);
+        System.out.println(response.getBody());
+    }
+
+    @GetMapping("/friends")
+    @ResponseBody
+    public void getFriends(){
+        log.info("GET /kakao/friends...");
+
+        String url = "https://kapi.kakao.com/v1/api/talk/friends";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 요청 헤더 설정
+        HttpHeaders header = new HttpHeaders();
+        header.add("Authorization","Bearer "+ kakaoTokenResponse.getAccess_token());
+        // 요청 바디  파라미터 설정(o)
+
+        HttpEntity entity = new HttpEntity(header);
+
+        // 요청 후 응답 확인
+        ResponseEntity<KakaoFriendsResponse> response =
+                restTemplate.exchange(url, HttpMethod.GET,entity, KakaoFriendsResponse.class);
+        System.out.println(response.getBody());
+
+        this.kakaoFriendsResponse = response.getBody();
+    }
+
+    @GetMapping("message/friends/{message}")
+    @ResponseBody
+    public void message_friends(@PathVariable String message){
+        String url = "https://kapi.kakao.com/v1/api/talk/friends/message/default/send";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 요청 헤더 설정
+        HttpHeaders header = new HttpHeaders();
+        header.add("Authorization","Bearer "+ kakaoTokenResponse.getAccess_token());
+        header.add("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+        // 요청 바디  파라미터 설정(o)
+        List<Element> list = kakaoFriendsResponse.getElements();
+        JSONArray array = new JSONArray(); // [] 빈 배열
+         for(int i = 0;i<list.size();i++){
+             array.add(list.get(i).getUuid());
+
+         }
+
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+
+        JSONObject template_object = new JSONObject();       // {}
+        template_object.put("object_type","text");
+        template_object.put("text",message);
+        template_object.put("link",new JSONObject());
+        template_object.put("button_title","-");
+
+        params.add("template_object",template_object.toString());
+        params.add("receiver_uuids",array.toString());
+
+        HttpEntity< MultiValueMap<String,String> > entity = new HttpEntity(params,header);
+
+        // 요청 후 응답 확인
+        ResponseEntity<KakaoFriendsResponse> response =
+                restTemplate.exchange(url, HttpMethod.POST,entity, KakaoFriendsResponse.class);
+        System.out.println(response.getBody());
+
+
+    }
+
     // -----------------------------------
     // KAKAO ACCESS TOKEN CLASS
     // -----------------------------------
@@ -207,6 +311,24 @@ public class KakaoLoginController {
         public Properties properties;
         public KakaoAccount kakao_account;
     }
-
+    //------------------------
+    // KAKAO FRIENDS MESSAGE
+    //------------------------
+    @Data
+    private static class Element{
+        public String profile_nickname;
+        public String profile_thumbnail_image;
+        public boolean allowed_msg;
+        public long id;
+        public String uuid;
+        public boolean favorite;
+    }
+    @Data
+    private static class KakaoFriendsResponse{
+        public ArrayList<Element> elements;
+        public int total_count;
+        public Object after_url;
+        public int favorite_count;
+    }
 
 }
