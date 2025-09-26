@@ -1,6 +1,7 @@
 package com.example.demo.Restful.C04NAVER;
 
 import com.example.demo.Restful.C03KAKAO.KakaoLoginController;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext;
@@ -28,6 +29,7 @@ public class NaverLoginController {
     private  String code;
     private  String state;
     private NaverTokenResponse naverTokenResponse;
+    private NaverProfileResponse naverProfileResponse;
 
     @GetMapping("/login")
     public String login(){
@@ -89,9 +91,11 @@ public class NaverLoginController {
         HttpEntity entity = new HttpEntity(header);
 
         // 요청 후 응답 확인
-        ResponseEntity<String> response =
-                restTemplate.exchange(url, HttpMethod.POST,entity, String.class);
+        ResponseEntity<NaverProfileResponse> response =
+                restTemplate.exchange(url, HttpMethod.POST,entity, NaverProfileResponse.class);
         System.out.println(response.getBody());
+
+        this.naverProfileResponse = response.getBody();
 
         // 뷰로 전달
 //        model.addAttribute("profile",response.getBody());
@@ -99,11 +103,47 @@ public class NaverLoginController {
 //        String image_url = response.getBody().getProperties().getThumbnail_image();
 //        String email = response.getBody().getKakao_account().getEmail();
         // model 은 스프링단독으로 쓸 때만
-//        model.addAttribute("nickname",nickname);
-//        model.addAttribute("image_url",image_url);
-//        model.addAttribute("email",email);
+        model.addAttribute("profile",naverProfileResponse.getProfileInfo());
+
 //
         return "naver/index";
+    }
+
+    @GetMapping("/logout1")
+    public String logout1(Model model){
+        log.info("GET /naver/logout1...");
+
+        String url = "https://nid.naver.com/oauth2.0/token";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 요청 헤더 설정
+        HttpHeaders header = new HttpHeaders();
+//        header.add("Authorization","Bearer "+ naverTokenResponse.getAccess_token());
+        // 요청 바디  파라미터 설정(o)
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("client_id",CLIENT_ID);
+        params.add("client_secret",CLIENT_SECRET);
+        params.add("grant_type","delete");
+        params.add("access_token", naverTokenResponse.getAccess_token());
+
+        HttpEntity< MultiValueMap<String,String>  > entity = new HttpEntity<>(params,header);
+
+        // 요청 후 응답 확인
+        ResponseEntity<NaverProfileResponse> response =
+                restTemplate.exchange(url, HttpMethod.POST,entity, NaverProfileResponse.class);
+        System.out.println(response.getBody());
+
+        // 뷰로 전달
+
+        return "redirect:/naver";
+
+    }
+
+    @GetMapping("/logout2")
+    public String logout2(){
+        log.info("GET /naver/logout2...");
+        return "redirect:https://nid.naver.com/nidlogin.logout?returl=https://www.naver.com/";
     }
 
     // NAVER TOKEN RESPONSE
@@ -114,4 +154,21 @@ public class NaverLoginController {
         public String token_type;
         public String expires_in;
     }
+    // NAVER PROFIIL RESPONSE CLASS
+    @Data
+    private static class ProfileInfo{
+        public String id;
+        public String nickname;
+        public String profile_image;
+        public String email;
+        public String name;
+    }
+    @Data
+    private static class NaverProfileResponse{
+        public String resultcode;
+        public String message;
+        @JsonProperty(value="response")
+        public ProfileInfo profileInfo;
+    }
+
 }

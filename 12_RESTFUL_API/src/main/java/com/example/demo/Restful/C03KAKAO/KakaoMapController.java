@@ -12,7 +12,7 @@ public class KakaoMapController {
 
     @GetMapping("/map")
     public void map(){
-        log.info("GET /kakap/map..."); 
+        log.info("GET /kakap/map...");
 
 
     }
