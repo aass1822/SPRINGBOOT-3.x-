@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>FILE UPLOAD PAGE</h1>
+
+    <h2>단일파일</h2>
+    <form action="/file/upload" method="post" enctype="multipart/form-data">
+        FILE : <input type="file" name="file" /> <br/>
+        <button>업로드[단일파일]</button>
+    </form>
+    <hr>
+    <h2>다중파일</h2>
+    <form action="/file/uploads" method="post" enctype="multipart/form-data">
+        FILE : <input type="file" name="files" multiple /> <br/>
+        <button>업로드[다중파일]</button>
+    </form>
+    <hr>
+    <h2>상품정보등록(DTO)</h2>
+    <form action="/file/upload_dto" method="post" enctype="multipart/form-data">
+        ID : <input name="id" /><br/>
+        CATEGORY : <input name="category" /><br/>
+        PRICE : <input name="price" /><br/>
+        FILE : <input type="file" name="files" multiple /> <br/>
+        <button>업로드</button>
+    </form>
+</body>
+</html>

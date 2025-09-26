@@ -11,9 +11,12 @@
     <hr/>
     <a href="javascript:void(0)" class="pay-btn">결제하기</a>
 
+    <!--  axios cdn   -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.10.0/axios.min.js" integrity="sha512-WkZrEcQ5LMyNy6Y2PQf+Tu3vMcsmKKRKuPXtJSTHQJ3mpuvLRlA5dlDDhrrcXfyWr6Z/y3wIMfjfqVFO/gDZYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
-        IMP.init("imp77727322");
+        IMP.init("");
 
        const certBtn = document.querySelector('.cert-btn');
        certBtn.addEventListener('click',()=>{
@@ -21,11 +24,18 @@
 
           const date = new Date();
 
-          IMP.certification({
-            channelKey: "",
-            merchant_uid: "test_"+date.toString(),
-          }, function (resp){
-            console.log(resp);
+           IMP.certification({
+                channelKey: "",
+                merchant_uid: "test_"+date.toString(),
+            }, function (resp){
+                console.log(resp);
+                const imp_uid = resp.imp_uid;
+                //비동기 요청(axios)
+                axios.get("/portOne/certifications/"+imp_uid)
+                .then((resp_2)=>{
+                    console.log("사용자 정보 조회" , resp_2)
+                })
+                .error(()=>{})
             });
        })
         //
