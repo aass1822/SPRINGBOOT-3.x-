@@ -27,5 +27,32 @@
         FILE : <input type="file" name="files" multiple /> <br/>
         <button>업로드</button>
     </form>
+    <hr/>
+
+    <h2>상품정보등록(DTO)_With_Axios</h2>
+    <form name="uploadForm" action="/file/upload_dto" onsubmit="return false" method="post" enctype="multipart/form-data">
+        ID : <input name="id" /><br/>
+        CATEGORY : <input name="category" /><br/>
+        PRICE : <input name="price" /><br/>
+        FILE : <input type="file" name="files" multiple /> <br/>
+        <button class="btn-upload-axios">업로드</button>
+    </form>
+
+    <!-- Axios cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const btnUpload = document.querySelector('.btn-upload-axios')
+        btnUpload.addEventListener('click',()=>{
+            const form = document.uploadForm;
+            const formData = new FormData();
+            axios.post("/file/upload_dto_async",formData,{ headers:{"Content-Type":"multipart/form-data"} })
+            .then((resp)=>{console.log(resp);})
+            .catch((err)=>{console.log(err);})
+        })
+
+    </script>
+
+
 </body>
 </html>
