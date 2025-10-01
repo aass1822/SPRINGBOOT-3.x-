@@ -9,7 +9,7 @@
 <body>
     <h1>/FILE/LIST</h1>
     <th:block th:each="item:${fileList}">
-        <a th:href="@{/file/download(filename=${item})}" th:text="${item}"></a> <br/>
+        <a th:href="@{/file/download(filename=${item})}"    th:text="${item}"></a>     <br/>
     </th:block>
 </body>
 </html>

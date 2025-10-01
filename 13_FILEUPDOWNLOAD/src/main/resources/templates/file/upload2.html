@@ -68,8 +68,8 @@
 <div class="preview"></div>
 <hr />
 <button class="btn-upload">업로드</button>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!--Axios cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.10.0/axios.min.js" integrity="sha512-WkZrEcQ5LMyNy6Y2PQf+Tu3vMcsmKKRKuPXtJSTHQJ3mpuvLRlA5dlDDhrrcXfyWr6Z/y3wIMfjfqVFO/gDZYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const d4El = document.querySelector('.d4');
     d4El.addEventListener('dragenter', (e) => {
@@ -91,7 +91,7 @@
 
 
     //유효성 검사 함수
-    function isValid(file){
+     function isValid(file){
         //type이 image/* 인지
         if(!file.type.startsWith('image/')){
             alert("이미지 파일만 업로드 가능합니다.");
@@ -108,7 +108,9 @@
         return true;
     }
 
+
     const formData = new FormData();
+
     d4El.addEventListener('drop', (e) => {
         e.preventDefault();
         d4El.style.border = "5px dashed gray";
@@ -134,7 +136,7 @@
             newImageEl.src=URL.createObjectURL(file);
             previewEl.prepend(newImageEl);
 
-            // form 에 add
+            //form 에 add
             formData.append("files",file);
 
         }
@@ -145,10 +147,10 @@
     btnUpload.addEventListener('click',()=>{
         console.log("upload btn clicked...");
 
-        // 요청
+        //요청
         axios.post("/file/upload_dto_async",formData,{ headers:{"Content-Type":"multipart/form-data"} })
-            .then((resp)=>{console.log(resp);})
-            .catch((err)=>{console.log(err);})
+            .then((resp)=>{ console.log(resp);})
+            .catch((err)=>{ console.log(err); })
     })
 
 </script>
