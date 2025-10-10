@@ -18,11 +18,11 @@ public class TxConfig {
     @Autowired
     private DataSource dataSource;
 
-    // 기본 Tx(Mybatis 용)
-    @Bean(name="dataSourceTransactionManager")
-    public DataSourceTransactionManager transactionManager(){
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    // 기본 Tx(Mybatis 용)
+//    @Bean(name = "dataSourceTransactionManager")
+//    public DataSourceTransactionManager transactionManager() {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 
 
     // JPA Tx

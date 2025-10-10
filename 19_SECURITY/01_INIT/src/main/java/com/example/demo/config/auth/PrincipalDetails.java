@@ -15,14 +15,22 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrincipalDetails implements UserDetails
-{
+public class PrincipalDetails implements UserDetails {
     private UserDto dto;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(dto.getRole()));
+
+        // 계정이 단일 ROLE을 가질 때("ROLE_USER")
+//        authorities.add(new SimpleGrantedAuthority(dto.getRole())); // :ROLE_ADMIN,ROLE_USER"
+
+        // 계정이 여러 ROLE을 가질때("ROLE_ADMIN,ROLE_USER")
+        String roles [] = dto.getRole().split(","); // ["ROLE_ADMIN","ROLE_USER"]
+        for(String role : roles){
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
 
         return authorities;
     }

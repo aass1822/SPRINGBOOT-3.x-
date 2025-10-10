@@ -25,26 +25,28 @@ repositories {
 }
 
 dependencies {
-    // DB (ORM(JPA))
+    //WEB(MVC -  인터셉터,리스너...)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //LOMBOK
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //THYMELEAF
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //DB(+ORM(JPA))
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    // WEB(MVC - 인터셉티,리스너
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // lombok
-	compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    // SECURITY
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    //SECURITY
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
-    // THYMELEAF
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-    // TEST
+    //TEST
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

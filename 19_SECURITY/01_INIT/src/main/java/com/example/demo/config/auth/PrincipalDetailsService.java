@@ -14,8 +14,8 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class PrincipalDetailsService implements UserDetailsService
-{
+public class PrincipalDetailsService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -26,8 +26,9 @@ public class PrincipalDetailsService implements UserDetailsService
         Optional<User> userOptional =
             userRepository.findById(username);
         if(userOptional.isEmpty())
-            throw new UsernameNotFoundException(username+" 계정이 존재하지 않습니다.");
-        // ENTITY -> DTO
+            throw new UsernameNotFoundException(username+" 계정이 존재하지 않습니다");
+
+        //ENTITY -> DTO
         User user = userOptional.get();
         UserDto dto = new UserDto();
         dto.setUsername(user.getUsername());
