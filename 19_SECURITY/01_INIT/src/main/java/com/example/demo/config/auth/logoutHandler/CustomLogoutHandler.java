@@ -9,19 +9,17 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Slf4j
 public class CustomLogoutHandler implements LogoutHandler {
-
-    // 해당 서버의 자체 로그아웃 처리
+    
+    //해당 서버의 자체 로그아웃 처리
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        log.info("CustomLogoutHandler's logout invoke...!");
-        // 세션기반(기본값)
-        HttpSession session = request.getSession(false);
-        if(session!=null){
+        log.info("CustomLogoutHandler's logout invoke..!");
+        //세션기반(기본값)
+        HttpSession session =request.getSession(false);
+        if(session!=null)
             session.invalidate();
-        }
 
-        // Token방식 -
-
+        //Token방식 -
 
     }
 }

@@ -1,6 +1,5 @@
 package com.example.demo.config.auth.exceptionHandler;
 
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,10 +12,11 @@ import java.io.IOException;
 @Slf4j
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override // 인증실패시 움직임
+    @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.error("CustomAuthenticationEntryPoint's commence invoke...!");
-        // ROLE 별로 기본페이지로 이동
+        log.error("CustomAuthenticationEntryPoint's commence invoke....!");
+        //ROLE 별로 기본페이지로 이동
         response.sendRedirect("/login?error="+authException.getMessage());
+
     }
 }

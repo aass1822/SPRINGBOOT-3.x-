@@ -23,11 +23,11 @@ public class PrincipalDetails implements UserDetails {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        // 계정이 단일 ROLE을 가질 때("ROLE_USER")
-//        authorities.add(new SimpleGrantedAuthority(dto.getRole())); // :ROLE_ADMIN,ROLE_USER"
+        //계정이 단일 ROLE을 가질때("ROLE_USER")
+        //authorities.add(new SimpleGrantedAuthority(dto.getRole()));
 
-        // 계정이 여러 ROLE을 가질때("ROLE_ADMIN,ROLE_USER")
-        String roles [] = dto.getRole().split(","); // ["ROLE_ADMIN","ROLE_USER"]
+        //계정이 여러 ROLE을 가질때("ROLE_ADMIN,ROLE_USER")
+        String roles [] = dto.getRole().split(","); //["ROLE_ADMIN","ROLE_USER"]
         for(String role : roles){
             authorities.add(new SimpleGrantedAuthority(role));
         }
